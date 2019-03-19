@@ -1,0 +1,13 @@
+#
+# Create tacacs plus configuration
+#
+---
+- name: Create configuration directory
+  local_action: file path=/root/pctn/scripts/ansible/tacacs_plus/configs state=directory
+  run_once: true
+  check_mode: no
+  changed_when: no
+
+- name: Create configurations
+  template: src=tacacs-config.j2 dest=/root/pctn/scripts/ansible/tacacs_plus/configs/{{inventory_hostname}}.tacacs.cfg
+  check_mode: no

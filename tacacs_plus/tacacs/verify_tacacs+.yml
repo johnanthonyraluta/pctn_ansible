@@ -1,0 +1,20 @@
+---
+#- name: PCTN Ansible Trial
+#  connection: local
+#  gather_facts: false
+#  hosts: PCTN
+ 
+- name: Trying Huawei module
+  ce_command:
+#      when: ansible_network_os == 'ios'
+      commands: 
+       - display clock
+       - display interface brief
+       - disp acl name aclREMOTE_ACCESS 
+       - display accounting-scheme tacacs_plus
+      provider: "{{ {'username':'userrw', 'password':'Pass@1234'} }}"   
+  register: output
+- name: Display output
+  debug:
+      var: output.stdout_lines[0]
+  tags: [ verify ] 

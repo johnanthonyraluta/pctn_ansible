@@ -1,0 +1,10 @@
+---
+ansible_host: 10.205.47.4
+ansible_user: userrw
+ansible_ssh_pass: Pass@1234
+ansible_connection: local
+ansible_network_os: ce
+transport: cli
+#ansbile_become: yes
+#ansible_become_method: enable
+#ansible_become_pass: cisco

@@ -1,0 +1,8 @@
+---
+ansible_host: 10.205.47.2
+ansible_user: userrw
+ansible_ssh_pass: Pass@1234
+ansible_connection: local
+ansible_network_os: ce
+transport: cli
+

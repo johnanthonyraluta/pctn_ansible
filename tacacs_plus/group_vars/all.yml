@@ -1,0 +1,6 @@
+---
+ce_provider:
+    host: "{{ip|default(ansible_host)|default(inventory_hostname)}}"
+    username: "{{ansible_user}}"
+    password: "{{ansible_ssh_pass}}"
+    transport: cli

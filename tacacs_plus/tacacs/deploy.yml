@@ -1,0 +1,23 @@
+#
+# Deploy HW TACACS Plus
+#
+---
+- name: Create and deploy TACACS+ configurations
+  hosts: all
+  vars:
+    configs: "{{inventory_dir}}/configs"
+  tasks:
+  - include_vars: "{{ item }}"
+    with_first_found:
+      - node.yml
+      - "{{ inventory_dir }}/node.yml"
+      - "/root/pctn/scripts/ansible/tacacs_plus/node.yml"
+    tags: [ configs ]
+#  - include: ../tools/clean.yml
+#    tags: [ clean ]
+  - include: config_tacacs+.yml
+    tags: [ configs ]
+  - include: deploy_tacacs+.yml
+    tags: [ deploy ]
+  - include: verify_tacacs+.yml
+    tags: [ verify ]

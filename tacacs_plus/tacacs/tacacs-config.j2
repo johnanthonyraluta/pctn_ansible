@@ -1,0 +1,94 @@
+{% set node = nodes[inventory_hostname] %}
+{% if node.internal is defined %}
+{%   for intf,data in node.internal|dictsort %}
+#
+interface {{intf}}
+  ip address {{data.ip}} 255.255.255.255
+  isis enable 1
+#
+command-privilege level rearrange
+#
+hwtacacs enable
+# 
+hwtacacs-server template tacacs_plus_servers
+  hwtacacs-server authentication 10.200.156.243
+  hwtacacs-server authentication 10.240.5.243 secondary
+  #
+  hwtacacs-server authorization 10.200.156.243
+  hwtacacs-server authorization 10.240.5.243 secondary
+  #
+  hwtacacs-server accounting 10.200.156.243
+  hwtacacs-server accounting 10.240.5.243 secondary
+  #
+  hwtacacs-server shared-key cipher CisC0IS3
+  hwtacacs-server source-ip {{data.ip}}
+  hwtacacs-server user-name original
+#
+
+aaa
+  authentication-scheme tacacs_plus
+    authentication-mode hwtacacs local
+  #
+  authorization-scheme tacacs_plus
+    authorization-mode hwtacacs local
+    authorization-cmd 0 hwtacacs local
+    authorization-cmd 1 hwtacacs local
+    authorization-cmd 2 hwtacacs local
+    authorization-cmd 3 hwtacacs local
+    authorization-cmd 4 hwtacacs local
+    authorization-cmd 5 hwtacacs local
+    authorization-cmd 6 hwtacacs local
+    authorization-cmd 7 hwtacacs local
+    authorization-cmd 8 hwtacacs local
+    authorization-cmd 9 hwtacacs local
+    authorization-cmd 10 hwtacacs local
+    authorization-cmd 11 hwtacacs local
+    authorization-cmd 12 hwtacacs local
+    authorization-cmd 13 hwtacacs local
+    authorization-cmd 14 hwtacacs local
+    authorization-cmd 15 hwtacacs local
+  #
+  accounting-scheme tacacs_plus
+    accounting-mode hwtacacs
+  #
+  domain default_admin
+  #
+  recording-scheme tacacs_plus
+    recording-mode hwtacacs tacacs_plus_servers
+  #              
+  system recording-scheme tacacs_plus
+  #
+  outbound recording-scheme tacacs_plus
+  #
+  cmd recording-scheme tacacs_plus
+#
+header login information ^
+
+______________ FOR STARHUB AUTHORIZED USERS ONLY __________________
+ If you are not authorized to access this equipment of network,
+ please disconnect immediately. 
+
+ Please note that StarHub takes a serious view of any unauthorized
+ or illegal access, and violators will be subject to prosecution.
+
+ Please be informed that all login attempts will be logged.
+-------------------------------------------------------------------
+^
+user-interface maximum-vty 15
+#
+user-interface vty 0 14
+  authentication-mode aaa
+  protocol inbound all
+  idle-timeout 15 0
+#
+user-interface
+  authentication-mode aaa
+  idle-timeout 15 0
+#
+acl name aclREMOTE_ACCESS number 3999
+  rule 5 permit ip 0.0.0.0 0
+  rule 10 permit ip source 172.16.0.0 0.15.255.255
+  rule 2000 deny ip source 192.168.0.0 0.0.255.255
+#
+{%   endfor %}
+{% endif %}

@@ -1,0 +1,11 @@
+#
+# Deploy OSPF routing in a WAN fabric
+#
+---
+#- include: ../tools/log_changes_init.yml
+
+- name: Deploy configurations
+  ce_config:
+#    provider: "{{ cli }}"
+    src: "/root/pctn/scripts/ansible/tacacs_plus/configs/{{inventory_hostname}}.tacacs.cfg"
+    #  register: changes

@@ -1,0 +1,22 @@
+---
+- name: PCTN Ansible Trial
+  connection: local
+  gather_facts: false
+  hosts: PCTN
+  tasks:
+    - name: Trying Huawei module
+      ce_command:
+#      when: ansible_network_os == 'ios'
+         commands: 
+             - display clock
+               #             - display interface brief
+               #             - disp acl name aclREMOTE_ACCESS 
+               #             - display accounting-scheme tacacs_plus 
+      register: output
+    - name: configure the login banner
+      ce_config:
+        lines: 
+           - header login information ^______________ FOR STARHUB AUTHORIZED USERS ONLY _________________\\nThis is a new line\\nThis is another new line^
+    - name: Display output
+      debug:
+        var: output.stdout_lines[0]
