@@ -1,0 +1,11 @@
+---
+- name: Fetching Huawei de Guzman Commands
+  hosts: PCTN
+  gather_facts: no
+  serial: 100%
+ 
+  tasks:
+  - set_fact:
+      script_dir: "scripts"
+  - name: Executing the expect script
+    script: ./{{ script_dir }}/get_commands.expect {{ ansible_ssh_host }} {{ commands }} {{ inventory_hostname }} {{ log_dir }}

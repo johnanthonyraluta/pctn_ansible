@@ -3,20 +3,26 @@
   connection: local
   gather_facts: false 
   hosts: PCTN
+  vars:
+          #contents: "{{ lookup('file', '/root/pctn/scripts/ansible/raw_banner.txt') }}"
   tasks:
     - name: Trying Huawei module
       ce_command:
 #      when: ansible_network_os == 'ios'
          commands: 
              - display clock
-               #             - display interface brief
+             - tftp -a {{ ansible_host }} 172.29.137.20 ge test.txt cfcard:/test2.txt
                #             - disp acl name aclREMOTE_ACCESS 
                #             - display accounting-scheme tacacs_plus 
       register: output
-    - name: configure the login banner
-      ce_config:
-        lines: 
-           - header login information {{"^" + "______________ FOR STARHUB AUTHORIZED USERS ONLY __________________\\nIf you are not authorized to access this equipment of network,\\nplease disconnect immediately. \\n\\nPlease note that StarHub takes a serious view of any unauthorized\\nor illegal access, and violators will be subject to prosecution.\\n\\nPlease be informed that all login attempts will be logged.\\n-------------------------------------------------------------------\\n" + "^"}}
+      #    - name: configure the login banner
+      #ce_banner:
+      #  lines: 
+      #     - header login information ^
+      #      ______________ FOR STARHUB AUTHORIZED USERS ONLY __________________
+      #     If you are not authorized to access this equipment of network, 
+      #      please disconnect immediately.
+      #      ^
     - name: Display output
       debug:
         var: output.stdout_lines[0]

@@ -1,6 +1,6 @@
 [PCTN]
 #TSG325D-CX01M4-01 ansible_host=10.205.47.1
-TSG325D-ATN950C-01 ansible_host=10.205.47.2
+TSG325D-ATN950C-01 ansible_host=10.205.47.2 
 #TSG325D-ATN910CA-01 ansible_host=10.205.47.3
 #TSG325D-CX01-01 ansible_host=10.205.47.4
 

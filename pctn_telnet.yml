@@ -1,0 +1,17 @@
+---
+- hosts: PCTN
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: my first telnet task
+      telnet:
+        user: userrw
+        password: Pass@1234
+        login_prompt: "Username: "
+        password_prompt: "Password: "
+        prompts:
+          - "[Change now? [Y/N]:]"
+        command:
+          - n
+          - display clock

@@ -9,7 +9,7 @@
 #      when: ansible_network_os == 'ios'
       commands: 
        - display clock
-       - display interface brief
+         #       - display interface brief
        - disp acl name aclREMOTE_ACCESS 
        - display accounting-scheme tacacs_plus
       provider: "{{ {'username':'userrw', 'password':'Pass@1234'} }}"   

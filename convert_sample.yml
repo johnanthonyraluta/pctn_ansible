@@ -1,0 +1,12 @@
+---
+- hosts: PCTN
+  tasks:
+  - name: Ansible replace string example
+    replace:
+      path: ~/pctn/scripts/ansible/raw_banner.txt
+      regexp: "--------" 
+      replace: "\n"
+    register: output
+  - name: Display output
+    debug:
+      var: output
